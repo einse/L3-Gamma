@@ -1,8 +1,8 @@
 <!doctype html>
 <html>
   <head>
-    <meta charset="windows-1251">
-    <title>Л3 Гаммирование</title>
+    <meta charset="utf-8">
+    <title>Р›3 Р“Р°РјРјРёСЂРѕРІР°РЅРёРµ</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="style.css">
@@ -11,23 +11,23 @@
   </head>
   <body>
     <div class="container" ng-app="myApp" ng-controller="myCtrl">
-      <h1>Шифрование с помощью гаммирования</h1>
-      <h2>Поле для ввода текста</h2>
-      <textarea ng-model="msg" ng-init="msg=''" placeholder="Введите текст, который надо зашифровать. Можно вводить любые символы Юникода (UTF-16BE), но шифроваться будут только те символы, которые есть в кодировке Windows-1251" autofocus></textarea>
-      <button ng-click="eCopy(newmsg)">Скопировать из "Результата дешифровки"</button>
-      <button ng-click="eClear()">Очистить</button>
-      <h2>Входная последовательность (Юникод)</h2>
+      <h1>РЁРёС„СЂРѕРІР°РЅРёРµ СЃ РїРѕРјРѕС‰СЊСЋ РіР°РјРјРёСЂРѕРІР°РЅРёСЏ</h1>
+      <h2>РџРѕР»Рµ РґР»СЏ РІРІРѕРґР° С‚РµРєСЃС‚Р°</h2>
+      <textarea ng-model="msg" ng-init="msg=''" placeholder="Р’РІРµРґРёС‚Рµ С‚РµРєСЃС‚, РєРѕС‚РѕСЂС‹Р№ РЅР°РґРѕ Р·Р°С€РёС„СЂРѕРІР°С‚СЊ. РњРѕР¶РЅРѕ РІРІРѕРґРёС‚СЊ Р»СЋР±С‹Рµ СЃРёРјРІРѕР»С‹ Р®РЅРёРєРѕРґР° (UTF-16BE), РЅРѕ С€РёС„СЂРѕРІР°С‚СЊСЃСЏ Р±СѓРґСѓС‚ С‚РѕР»СЊРєРѕ С‚Рµ СЃРёРјРІРѕР»С‹, РєРѕС‚РѕСЂС‹Рµ РµСЃС‚СЊ РІ РєРѕРґРёСЂРѕРІРєРµ Windows-1251" autofocus></textarea>
+      <button ng-click="eCopy(newmsg)">РЎРєРѕРїРёСЂРѕРІР°С‚СЊ РёР· "Р РµР·СѓР»СЊС‚Р°С‚Р° РґРµС€РёС„СЂРѕРІРєРё"</button>
+      <button ng-click="eClear()">РћС‡РёСЃС‚РёС‚СЊ</button>
+      <h2>Р’С…РѕРґРЅР°СЏ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ (Р®РЅРёРєРѕРґ)</h2>
       <table class="table">
         <tr>
-          <th>Юникод</th>
-          <th>ASCII-код</th>
+          <th>Р®РЅРёРєРѕРґ</th>
+          <th>ASCII-РєРѕРґ</th>
         </tr>
         <tr>
           <th>{{ msg_unicode_numbers = UnicodeString2UnicodeNumbers(msg) }}</th>
           <th>{{ msg_ascii_numbers = UnicodeNumbers2AsciiNumbers(msg_unicode_numbers) }}</th>
         </tr>
       </table>
-      <h2>Гамма</h2>
+      <h2>Р“Р°РјРјР°</h2>
       <table class="table">
         <tr>
           <th>{{ gamma_numbers = eGamma(msg, a, c, b, t0) }}</th>
@@ -36,7 +36,7 @@
           <th>{{ gamma_ascii_string = AsciiNumbers2AsciiString(gamma_numbers) }}</th>
         </tr>
       </table>
-      <h2>Шифровка</h2>
+      <h2>РЁРёС„СЂРѕРІРєР°</h2>
       <table class="table">
         <tr>
           <th>{{ cypher_ascii_numbers = e(msg_ascii_numbers, gamma_numbers) }}</th>
@@ -56,19 +56,19 @@
 
         </tr>
       </table>
-      <h2>II. Поле для ввода шифра</h2>
-      <textarea ng-model="cypher" ng-init="cypher=''" placeholder="Шифр (ASCII-строка)"></textarea>
-<!--      <textarea ng-model="copiable_gamma" ng-init="copiable_gamma=''" placeholder="Гамма (ASCII-строка)"></textarea>
-      <button ng-click="copiable_gamma = gamma_ascii_string">Вставить гамму</button>-->
-      <button ng-click="dCopy(cypher_ascii_string_2)">Скопировать из "Результата шифрования"</button>
-      <button ng-click="dClear()">Очистить</button>
-      <h2>Шифр в виде последовательности кодов ASCII</h2>
+      <h2>II. РџРѕР»Рµ РґР»СЏ РІРІРѕРґР° С€РёС„СЂР°</h2>
+      <textarea ng-model="cypher" ng-init="cypher=''" placeholder="РЁРёС„СЂ (ASCII-СЃС‚СЂРѕРєР°)"></textarea>
+<!--      <textarea ng-model="copiable_gamma" ng-init="copiable_gamma=''" placeholder="Р“Р°РјРјР° (ASCII-СЃС‚СЂРѕРєР°)"></textarea>
+      <button ng-click="copiable_gamma = gamma_ascii_string">Р’СЃС‚Р°РІРёС‚СЊ РіР°РјРјСѓ</button>-->
+      <button ng-click="dCopy(cypher_ascii_string_2)">РЎРєРѕРїРёСЂРѕРІР°С‚СЊ РёР· "Р РµР·СѓР»СЊС‚Р°С‚Р° С€РёС„СЂРѕРІР°РЅРёСЏ"</button>
+      <button ng-click="dClear()">РћС‡РёСЃС‚РёС‚СЊ</button>
+      <h2>РЁРёС„СЂ РІ РІРёРґРµ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё РєРѕРґРѕРІ ASCII</h2>
       <table class="table">
         <tr>
           <th>{{ cypher_ascii_numbers = AsciiString2AsciiNumbers(cypher) }}</th>
         </tr>
       </table>
-      <h2>Результат дешифровки</h2>
+      <h2>Р РµР·СѓР»СЊС‚Р°С‚ РґРµС€РёС„СЂРѕРІРєРё</h2>
       <table class="table">
         <tr>
           <!--<th>{{ newmsg_ascii_numbers = d(cypher_ascii_numbers, AsciiString2AsciiNumbers(custom_gamma)) }}</th>-->
@@ -80,8 +80,8 @@
           <th>{{ newmsg = AsciiNumbers2AsciiString(newmsg_ascii_numbers) }}</th>
         </tr>
       </table>
-      <h2>III. Параметры датчика ПСЧ</h2>
-      <button ng-click="reset()">Сброс к значениям по умолчанию</button>
+      <h2>III. РџР°СЂР°РјРµС‚СЂС‹ РґР°С‚С‡РёРєР° РџРЎР§</h2>
+      <button ng-click="reset()">РЎР±СЂРѕСЃ Рє Р·РЅР°С‡РµРЅРёСЏРј РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ</button>
       <table class="table">
         <tr>
           <th>A = <input type="number" ng-model="a" ng-init="a=5"></th>
@@ -90,7 +90,7 @@
           <th>B = <input type="number" ng-model="b" ng-init="b=256"></th>
         </tr>
       </table>
-      <h2>Отсчёты датчика ПСЧ</h2>
+      <h2>РћС‚СЃС‡С‘С‚С‹ РґР°С‚С‡РёРєР° РџРЎР§</h2>
       <table class="table">
         <tr><th>T(i) = (A * T(i-1) + C) mod B</th></tr>
         <tr><th>T(0) = {{ t0 }}</th></tr>
