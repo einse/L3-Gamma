@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="windows-1251">
+    <title>Л3 Гаммирование</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div class="container" ng-app="myApp" ng-controller="myCtrl">
+      <h1>Шифрование с помощью гаммирования</h1>
+      <h2>Поле для ввода текста</h2>
+      <textarea ng-model="msg" ng-init="msg=''" placeholder="Введите текст, который надо зашифровать. Можно вводить любые символы Юникода (UTF-16BE), но шифроваться будут только те символы, которые есть в кодировке Windows-1251" autofocus></textarea>
+      <button ng-click="eCopy(newmsg)">Скопировать из "Результата дешифровки"</button>
+      <button ng-click="eClear()">Очистить</button>
+      <h2>Входная последовательность (Юникод)</h2>
+      <table class="table">
+        <tr>
+          <th>Юникод</th>
+          <th>ASCII-код</th>
+        </tr>
+        <tr>
+          <th>{{ msg_unicode_numbers = UnicodeString2UnicodeNumbers(msg) }}</th>
+          <th>{{ msg_ascii_numbers = UnicodeNumbers2AsciiNumbers(msg_unicode_numbers) }}</th>
+        </tr>
+      </table>
+      <h2>Гамма</h2>
+      <table class="table">
+        <tr>
+          <th>{{ gamma_numbers = eGamma(msg, a, c, b, t0) }}</th>
+        </tr>
+        <tr>
+          <th>{{ gamma_ascii_string = AsciiNumbers2AsciiString(gamma_numbers) }}</th>
+        </tr>
+      </table>
+      <h2>Шифровка</h2>
+      <table class="table">
+        <tr>
+          <th>{{ cypher_ascii_numbers = e(msg_ascii_numbers, gamma_numbers) }}</th>
+        </tr>
+        <tr>
+          <th>{{ cypher_ascii_string_2 = AsciiNumbers2AsciiString_2(cypher_ascii_numbers) }}</th>
+        </tr>
+      </table>
+
+      <table class="table" style="display:none; visibility: hidden;">
+        <tr>
+          <th>{{ cypher_ascii_string = AsciiNumbers2AsciiString(cypher_ascii_numbers) }}</th>
+        </tr>
+      </table>
+      <table class="table">
+        <tr>
+
+        </tr>
+      </table>
+      <h2>II. Поле для ввода шифра</h2>
+      <textarea ng-model="cypher" ng-init="cypher=''" placeholder="Шифр (ASCII-строка)"></textarea>
+<!--      <textarea ng-model="copiable_gamma" ng-init="copiable_gamma=''" placeholder="Гамма (ASCII-строка)"></textarea>
+      <button ng-click="copiable_gamma = gamma_ascii_string">Вставить гамму</button>-->
+      <button ng-click="dCopy(cypher_ascii_string_2)">Скопировать из "Результата шифрования"</button>
+      <button ng-click="dClear()">Очистить</button>
+      <h2>Шифр в виде последовательности кодов ASCII</h2>
+      <table class="table">
+        <tr>
+          <th>{{ cypher_ascii_numbers = AsciiString2AsciiNumbers(cypher) }}</th>
+        </tr>
+      </table>
+      <h2>Результат дешифровки</h2>
+      <table class="table">
+        <tr>
+          <!--<th>{{ newmsg_ascii_numbers = d(cypher_ascii_numbers, AsciiString2AsciiNumbers(custom_gamma)) }}</th>-->
+          <th>{{ newmsg_ascii_numbers = d(cypher_ascii_numbers, gamma_numbers) }}</th>
+        </tr>
+      </table>
+      <table class="table">
+        <tr>
+          <th>{{ newmsg = AsciiNumbers2AsciiString(newmsg_ascii_numbers) }}</th>
+        </tr>
+      </table>
+      <h2>III. Параметры датчика ПСЧ</h2>
+      <button ng-click="reset()">Сброс к значениям по умолчанию</button>
+      <table class="table">
+        <tr>
+          <th>A = <input type="number" ng-model="a" ng-init="a=5"></th>
+          <th>C = <input type="number" ng-model="c" ng-init="c=51"></th>
+          <th>T(0) = <input type="number" ng-model="t0" ng-init="t0=13"></th>
+          <th>B = <input type="number" ng-model="b" ng-init="b=256"></th>
+        </tr>
+      </table>
+      <h2>Отсчёты датчика ПСЧ</h2>
+      <table class="table">
+        <tr><th>T(i) = (A * T(i-1) + C) mod B</th></tr>
+        <tr><th>T(0) = {{ t0 }}</th></tr>
+        <tr><th>T(1) = ({{ a }} * {{ t0 }} + {{ c }}) mod {{ b }} = {{ a * t0 + c }} mod {{ b }} = {{ t1 = (a * t0 + c) % 256 }}</th></tr>
+        <tr><th>T(2) = ({{ a }} * {{ t1 }} + {{ c }}) mod {{ b }} = {{ a * t1 + c }} mod {{ b }} = {{ t2 = (a * t1 + c) % 256 }}</th></tr>
+      </table>
+      <table class="table" ng-init="names=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
+        <tr>
+          <th ng-repeat="x in names">
+            {{ x }}
+          </th>
+        </tr>
+        <tr>
+          <th ng-repeat="x in names">
+            {{ gamma(x, a, c, b, t0) }}
+          </th>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
